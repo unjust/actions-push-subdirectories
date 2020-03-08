@@ -11,8 +11,7 @@ BASE=$(pwd)
 git config --global user.email "johno-actions-push-subdirectories@example.org"
 git config --global user.name "$GITHUB_USERNAME"
 
-echo "Cloning folders in $FOLDER and pushing to $GITHUB_USERNAME"
-echo "Using $STARTER_NAME as the package.json key"
+echo "Cloning folders in $FOLDER and pushing to $GITHUB_USERNAME $REPO_NAME $BRANCH_NAME"
 
 # sync to read-only clones
 for folder in $FOLDER/*; do
@@ -24,7 +23,7 @@ for folder in $FOLDER/*; do
   # NAME=$(cat $folder/package.json | jq --arg name "$STARTER_NAME" -r '.[$name]')
   NAME=$REPO_NAME
   echo "  Name: $NAME"
-  IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
+  # IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
   CLONE_DIR="__${NAME}__clone__"
   echo "  Clone dir: $CLONE_DIR"
 
@@ -32,7 +31,7 @@ for folder in $FOLDER/*; do
   # this handles file deletions, additions, and changes seamlessly
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   cd $CLONE_DIR
-  git co -t origin/$BRANCH_NAME
+  git checkout -t origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
 
@@ -45,7 +44,7 @@ for folder in $FOLDER/*; do
 
   # Commit if there is anything to
   if [ -n "$(git status --porcelain)" ]; then
-    echo  "  Committing $NAME to $GITHUB_REPOSITORY"
+    echo  "  Committing $BRANCH_NAME to $GITHUB_REPOSITORY $GITHUB_USERNAME/$NAME"
     git add .
     git commit --message "Update $NAME from $GITHUB_REPOSITORY"
     # git push origin $BRANCH_NAME
