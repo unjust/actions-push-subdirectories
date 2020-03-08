@@ -4,7 +4,7 @@ set -e
 
 FOLDER=$1
 GITHUB_USERNAME=$2
-STARTER_NAME="${3:-name}"
+REPO_NAME="${3}"
 BRANCH_NAME="${4:-master}"
 BASE=$(pwd)
 
@@ -21,7 +21,8 @@ for folder in $FOLDER/*; do
 
   echo "$folder"
 
-  NAME=$(cat $folder/package.json | jq --arg name "$STARTER_NAME" -r '.[$name]')
+  # NAME=$(cat $folder/package.json | jq --arg name "$STARTER_NAME" -r '.[$name]')
+  NAME=$REPO_NAME
   echo "  Name: $NAME"
   IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
   CLONE_DIR="__${NAME}__clone__"
