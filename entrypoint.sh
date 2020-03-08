@@ -32,22 +32,24 @@ for folder in $FOLDER/*; do
   # this handles file deletions, additions, and changes seamlessly
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   cd $CLONE_DIR
-  find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
+  git co -t origin/$BRANCH_NAME
+  # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
 
   # generate a new yarn.lock file based on package-lock.json unless you're in a workspace
-  if [ "$IS_WORKSPACE" = null ]; then
-    echo "  Regenerating yarn.lock"
-    rm -rf yarn.lock
-    yarn
-  fi
+  # if [ "$IS_WORKSPACE" = null ]; then
+    # echo "  Regenerating yarn.lock"
+    # rm -rf yarn.lock
+    # yarn
+  # fi
 
   # Commit if there is anything to
   if [ -n "$(git status --porcelain)" ]; then
     echo  "  Committing $NAME to $GITHUB_REPOSITORY"
     git add .
     git commit --message "Update $NAME from $GITHUB_REPOSITORY"
-    git push origin $BRANCH_NAME
+    # git push origin $BRANCH_NAME
+    git push
     echo  "  Completed $NAME"
   else
     echo "  No changes, skipping $NAME"
