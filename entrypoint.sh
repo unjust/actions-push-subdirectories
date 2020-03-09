@@ -33,17 +33,13 @@ for folder in $FOLDER/*; do
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   echo "cd into dir"
   cd $CLONE_DIR
-  echo "before remote list and update"
   git remote -v
   echo "Remote update"
   git remote update
-  echo "git fetch...."
-  git fetch
-  echo "and checkout with track..."
   git remote show origin
-  echo "git fetch branch...."
+  echo "git fetch branch and track...."
   git fetch origin $BRANCH_NAME
-  git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+  git checkout -t origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. $TARGET_FOLDER
 
