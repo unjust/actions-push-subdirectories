@@ -30,7 +30,9 @@ for folder in $FOLDER/*; do
   # clone, delete files in the clone, and copy (new) files over
   # this handles file deletions, additions, and changes seamlessly
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
+  echo "cd into dir"
   cd $CLONE_DIR
+  echo "before remote update"
   git remote update
   echo "Remote update"
   git fetch
