@@ -31,6 +31,7 @@ for folder in $FOLDER/*; do
   # this handles file deletions, additions, and changes seamlessly
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   cd $CLONE_DIR
+  git remote update
   git fetch origin $BRANCH_NAME
   git checkout -t origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
