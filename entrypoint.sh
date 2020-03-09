@@ -34,6 +34,7 @@ for folder in $FOLDER/*; do
   cd $CLONE_DIR
   echo "before remote update"
   git remote update
+  git remote -v
   echo "Remote update"
   git fetch
   git checkout -t origin/$BRANCH_NAME
