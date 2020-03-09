@@ -30,14 +30,14 @@ for folder in $FOLDER/*; do
 
   # clone, delete files in the clone, and copy (new) files over
   # this handles file deletions, additions, and changes seamlessly
-  git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
+  git clone https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   echo "cd into dir"
   cd $CLONE_DIR
-  echo "Remote update"
-  git remote update
-  echo "git fetch branch ..."
-  git fetch origin $BRANCH_NAME
-  echo "and track..."
+  #echo "Remote update"
+  #git remote update
+  #echo "git fetch branch ..."
+  #git fetch origin $BRANCH_NAME
+  #echo "and track..."
   git checkout -t origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. $TARGET_FOLDER
