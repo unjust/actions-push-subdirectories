@@ -32,9 +32,9 @@ for folder in $FOLDER/*; do
   git clone --depth 1 https://$API_TOKEN_GITHUB@github.com/$GITHUB_USERNAME/$NAME.git $CLONE_DIR &> /dev/null
   echo "cd into dir"
   cd $CLONE_DIR
-  echo "before remote update"
-  git remote update
+  echo "before remote list and update"
   git remote -v
+  git remote update
   echo "Remote update"
   git fetch
   git checkout -t origin/$BRANCH_NAME
