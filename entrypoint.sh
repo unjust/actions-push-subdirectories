@@ -34,9 +34,10 @@ for folder in $FOLDER/*; do
   cd $CLONE_DIR
   echo "before remote list and update"
   git remote -v
-  git remote update
   echo "Remote update"
-  git fetch
+  git remote update
+  echo "git fetch"
+  git fetch origin $BRANCH_NAME
   git checkout -t origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
