@@ -6,6 +6,7 @@ FOLDER=$1
 GITHUB_USERNAME=$2
 REPO_NAME="${3}"
 BRANCH_NAME="${4:-master}"
+TARGET_FOLDER="${5:-.}"
 BASE=$(pwd)
 
 git config --global user.email "johno-actions-push-subdirectories@example.org"
@@ -37,11 +38,11 @@ for folder in $FOLDER/*; do
   echo "Remote update"
   git remote update
   echo "git fetch...."
-  git fetch origin $BRANCH_NAME
-  echo "and switch..."
-  git switch -c $BRANCH_NAME --track origin/$BRANCH_NAME
+  git fetch
+  echo "and checkout..."
+  git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
-  cp -r $BASE/$folder/. .
+  cp -r $BASE/$folder/. $TARGET_FOLDER
 
   # generate a new yarn.lock file based on package-lock.json unless you're in a workspace
   # if [ "$IS_WORKSPACE" = null ]; then
