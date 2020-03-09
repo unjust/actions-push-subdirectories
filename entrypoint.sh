@@ -38,8 +38,8 @@ for folder in $FOLDER/*; do
   git remote update
   echo "git fetch...."
   git fetch origin $BRANCH_NAME
-  echo "and checkout..."
-  git checkout $BRANCH_NAME
+  echo "and switch..."
+  git switch -c $BRANCH_NAME --track origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
 
