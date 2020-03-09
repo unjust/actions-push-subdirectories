@@ -39,8 +39,8 @@ for folder in $FOLDER/*; do
   git remote update
   echo "git fetch...."
   git fetch
-  echo "and checkout..."
-  git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+  echo "and checkout with track..."
+  git checkout -b $BRANCH_NAME --track origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. $TARGET_FOLDER
 
