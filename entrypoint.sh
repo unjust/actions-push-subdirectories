@@ -40,6 +40,7 @@ for folder in $FOLDER/*; do
   echo "git fetch...."
   git fetch
   echo "and checkout with track..."
+  git remote show origin
   git checkout -b $BRANCH_NAME --track origin/$BRANCH_NAME
   # find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. $TARGET_FOLDER
